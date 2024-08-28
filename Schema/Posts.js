@@ -38,7 +38,40 @@ const PostsSchema =new mongoose.Schema({
     comments:[{
         type:mongoose.SchemaTypes.ObjectId,
         ref: 'Comments'
-    }]
+    }],
+    typePost:{
+        type:String,
+        default:'post'
+    },
+    views: [{
+        user: {
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: 'Users'
+        },
+        count: {
+            type: Number,
+            default: 0
+        }
+    }],
+    totalViews: {
+        type: Number,
+        default: 0
+    },
+    rankScore: { // New field to store the calculated rank score
+        type: Number,
+        default: 0
+    },
+    selectedImages: [{
+        imageIndex: Number, // The index of the selected image in post_imgs
+        users: [{
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: 'Users'
+        }]
+    }],
+    totalSelections: {
+        type: Number,
+        default: 0
+    }
 })
 
 

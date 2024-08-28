@@ -30,7 +30,15 @@ const UserSchema = new mongoose.Schema({
     following_count:{
         type:Number,
         default:() => 0
-    }
+    },
+    followers : [{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:"Freinds"
+    }],
+    following : [{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:"Freinds"
+    }],
 })
 
 module.exports = mongoose.model('Users',UserSchema)

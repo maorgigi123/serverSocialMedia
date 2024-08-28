@@ -14,15 +14,30 @@ const MessagesSchema = new mongoose.Schema({
         ref:'Users',
         required:true
         },         // ID or username of the message sender
+        recipient: {
+          type:mongoose.Schema.Types.ObjectId,
+          ref:'Users',
+          required:true
+          },
       content: String,        // Content of the message
+      image: {
+        typeFile:{
+          type:String,
+          default: () => ''
+        },
+        data:{
+          type:String,
+          default: () => ''
+        },
+      },
       timestamp: {
         type:Date,
         default: () => Date.now()
         },        // Timestamp indicating when the message was sent
-      readBy: [{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Users',
-    }]        // Array of participant IDs who have read the message
+      read: {
+        type:Boolean,
+        default: false
+      }       // Array of participant IDs who have read the message
     }
   ],
   createdAt: {

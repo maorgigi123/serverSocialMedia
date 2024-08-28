@@ -4,7 +4,7 @@ const addComment = (Comments, Posts) => async (req, res) => {
   const { userId, postId, content } = req.body;
   const userID = new mongoose.Types.ObjectId(userId);
   const postID = new mongoose.Types.ObjectId(postId);
-
+console.log()
   try {
     // Step 1: Create and save the new comment
     const comment = new Comments({

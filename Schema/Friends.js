@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const FriendstSchema = new mongoose.Schema({
-    user1_id: {
+    follower: {
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
+        ref:'Users',
         required:true
     },
-    user2_id:{
-        type:String,
+    following:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Users',
         required:true
     },
     createdAt:{
@@ -16,4 +17,4 @@ const FriendstSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Friends',FriendstSchema)
+module.exports = mongoose.model('Freinds',FriendstSchema)

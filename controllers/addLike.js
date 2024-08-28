@@ -4,7 +4,6 @@ const AddLike = (Likes,Posts) => async (req,res) =>{
     const {userId,postId} = req.body;
     const userID = new mongoose.mongo.ObjectId(userId);
     const postID = new mongoose.mongo.ObjectId(postId);
-
     const existingLike = await Likes.findOne({ user_id: userID, post_id: postID });
     
     if (existingLike) {
@@ -19,7 +18,14 @@ const AddLike = (Likes,Posts) => async (req,res) =>{
             postID,
             { $pull: { likes: userID }, $inc: { likesCount: -1 } },
             { new: true }
-        );
+        ).populate('author').populate({
+            path: 'comments',
+            options: { sort: { createdAt: -1 } }, // Sort comments from newest to oldest
+            populate: [
+                { path: 'user_id', model: 'Users' }, // Populate user details for each comment
+                { path: 'likes', model: 'Users' } // Populate likes for each comment
+            ]
+        });
         res.json({removeLike: updatedPost});
     } else {
         try {
@@ -34,7 +40,14 @@ const AddLike = (Likes,Posts) => async (req,res) =>{
             newLike.save()
                 .then(savedLike => {
                     // Add the new like to the post's likes array
-                    return Posts.findByIdAndUpdate(postID, { $push: { likes: userID}, $inc: { likesCount: 1 } }, { new: true });
+                     return Posts.findByIdAndUpdate(postID, { $push: { likes: userID}, $inc: { likesCount: 1 } }, { new: true }).populate('author').populate({
+                        path: 'comments',
+                        options: { sort: { createdAt: -1 } }, // Sort comments from newest to oldest
+                        populate: [
+                            { path: 'user_id', model: 'Users' }, // Populate user details for each comment
+                            { path: 'likes', model: 'Users' } // Populate likes for each comment
+                        ]
+                    });
                 })
                 .then(updatedPost =>{
                     // Return the updated post with the added like

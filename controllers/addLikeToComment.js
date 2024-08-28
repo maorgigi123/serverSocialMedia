@@ -5,6 +5,7 @@ const AddLikeToComment = (Comments,Post) => async (req,res) =>{
     const commentID = new mongoose.mongo.ObjectId(commentId);
     const userID = new mongoose.mongo.ObjectId(userId);
     const postID = new mongoose.mongo.ObjectId(postId);
+
    try {
         // Check if the comment exists
         const comment = await Comments.findById(commentID);
