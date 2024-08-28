@@ -6,7 +6,6 @@
   "dependencies": {
     "@tensorflow-models/coco-ssd": "^2.2.3",
     "@tensorflow/tfjs": "^4.20.0",
-    "@tensorflow/tfjs-node": "^4.20.0",
     "bcrypt-nodejs": "^0.0.3",
     "canvas": "^2.11.2",
     "child_process": "^1.0.2",
